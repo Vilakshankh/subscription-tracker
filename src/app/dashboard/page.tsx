@@ -73,24 +73,20 @@ export default function DashboardPage() {
         activeCount={stats.activeCount}
       />
 
-      {/* Main content: table + sidebar */}
-      <div className="flex flex-col gap-6 lg:flex-row">
-        {/* Subscription table (2/3) */}
-        <div className="flex-1 min-w-0">
-          <SubscriptionTable
-            subscriptions={subscriptions}
-            onEdit={(sub) => setEditSub(sub)}
-            onDelete={(id) => {
-              const sub = subscriptions.find(s => s.id === id)
-              if (sub) setDeleteSub(sub)
-            }}
-          />
-        </div>
+      {/* Upcoming Renewals — high priority, right below stats */}
+      <UpcomingRenewals renewals={stats.upcomingRenewals} onEdit={(sub) => setEditSub(sub)} />
 
-        {/* Upcoming renewals sidebar (1/3) */}
-        <div className="w-full lg:w-80 flex-shrink-0">
-          <UpcomingRenewals renewals={stats.upcomingRenewals} />
-        </div>
+      {/* All Subscriptions table */}
+      <div className="space-y-3">
+        <h2 className="text-lg font-semibold tracking-tight">All Subscriptions</h2>
+        <SubscriptionTable
+          subscriptions={subscriptions}
+          onEdit={(sub) => setEditSub(sub)}
+          onDelete={(id) => {
+            const sub = subscriptions.find(s => s.id === id)
+            if (sub) setDeleteSub(sub)
+          }}
+        />
       </div>
 
       {/* Dialogs */}
